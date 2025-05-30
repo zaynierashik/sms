@@ -10,6 +10,7 @@ export default function ItemsTable({
     filters = null,    // JSX for filter dropdowns (optional)
     onSelect = null,   // (selectedIds: []) => void
     selectedIds = [],  // array of selected row IDs for external control (optional)
+    snLabel = "S.N.",
 }) {
     const [searchQuery, setSearchQuery] = useState("");
     const [selected, setSelected] = useState([]);
@@ -42,7 +43,6 @@ export default function ItemsTable({
 
     return (
         <div className="overflow-hidden rounded-xl  bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
-            {/* Search and Filters */}
             {(onSearch || filters) && (
                 <div className="flex flex-col md:flex-row justify-between items-center gap-3 pt-1 pb-5">
                     {onSearch && (
@@ -62,7 +62,9 @@ export default function ItemsTable({
                                 </TableCell>
                             )} */}
 
-                            <TableCell key="sn" isHeader className="px-5 py-3 font-medium text-start text-theme-base dark:text-gray-400">S.N.</TableCell>
+                            <TableCell key="sn" isHeader className="px-5 py-3 font-medium text-start text-theme-base dark:text-gray-400">
+                                {snLabel}
+                            </TableCell>
                             {columns.map((col) => (
                                 <TableCell key={col.accessor} isHeader className="px-5 py-3 font-medium text-start text-theme-base dark:text-gray-400">
                                     {col.label}

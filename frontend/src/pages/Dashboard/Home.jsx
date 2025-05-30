@@ -1,41 +1,181 @@
+import { useState, useEffect, useRef } from "react";
+import { EyeIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router-dom";
 import CardLayout from "../../components/card/CardLayout";
-import { BuildingOffice2Icon, UserIcon, ClockIcon, XCircleIcon } from "@heroicons/react/24/outline";
+import UserCard from "../../assets/card.png";
+import TritonLogo from "../../assets/institutions/triton-logo.png";
 
 export default function Home() {
+	const [visibleCount, setVisibleCount] = useState(8);
+	const [selectedIndex, setSelectedIndex] = useState(null);
+	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+	const [pendingDeleteIndex, setPendingDeleteIndex] = useState(null);
+	const navigate = useNavigate();
+
+	const cardRefs = useRef([]);
+
 	const schoolMetrics = [
-        {
-            icon: BuildingOffice2Icon,
-            label: "Associated Institutions",
-            description: "25",
-        },
-        {
-            icon: UserIcon,
-            label: "Involved Instructors",
-            description: "15",
-        },
-        {
-            icon: ClockIcon,
-            label: "Offered Courses",
-            description: "5",
-        },
-        {
-            icon: XCircleIcon,
-            label: "Cancelled Requests",
-            description: "5",
-        },
-    ];
+		{ label: "Total Institutions", description: "25" },
+		{ label: "Total Instructors", description: "15" },
+		{ label: "Offered Courses", description: "5" },
+	];
+
+	const [institutionMetrics, setInstitutionMetrics] = useState(
+		Array(16)
+			.fill()
+			.map((_, i) => ({
+				id: i + 1,
+				image: TritonLogo,
+				label: `Triton SS & College ${i + 1}`,
+			}))
+	);
+
+	const visibleInstitutions = institutionMetrics.slice(0, visibleCount);
+
+	const handleShowMore = () => setVisibleCount((prev) => prev + 8);
+
+	const handleCardClick = (index) => {
+		setSelectedIndex((prev) => (prev === index ? null : index));
+	};
+
+	const handleDeleteClick = (index) => {
+		setPendingDeleteIndex(index);
+		setIsDeleteModalOpen(true);
+	};
+
+	const confirmDelete = () => {
+		if (pendingDeleteIndex !== null) {
+			const updatedMetrics = [...institutionMetrics];
+			updatedMetrics.splice(pendingDeleteIndex, 1);
+			setInstitutionMetrics(updatedMetrics);
+			setIsDeleteModalOpen(false);
+			setPendingDeleteIndex(null);
+			setSelectedIndex(null);
+		}
+	};
+
+	useEffect(() => {
+		function handleClickOutside(event) {
+			if (selectedIndex === null) return;
+			const cardNode = cardRefs.current[selectedIndex];
+			if (cardNode && !cardNode.contains(event.target)) {
+				setSelectedIndex(null);
+			}
+		}
+		document.addEventListener("mousedown", handleClickOutside);
+		return () => document.removeEventListener("mousedown", handleClickOutside);
+	}, [selectedIndex]);
 
 	return (
 		<>
-            <div className="mt-11 mb-5">
-                <h1 className="text-4xl font-semibold dark:text-white/90">Welcome, Rashik Chauhan.</h1>
-            </div>
+			<div className="mb-5 space-y-6 md:space-y-0 md:flex md:gap-3">
+				<div className="flex-1 rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6 text-theme-base dark:text-white/90">
+					<div className="flex items-center justify-between">
+						<div>
+							<p className="text-xl mb-2 font-medium">Hello Rashik,</p>
+							<p className="dark:text-gray-400">
+								Welcome! Let's dive into your classes and keep progressing towards the goals.
+							</p>
+						</div>
+						<img src={UserCard} alt="Logo" className="object-contain w-20 h-20 ml-4" />
+					</div>
+				</div>
 
-			<div className="gap-4 mb-6 md:gap-6">
-                <div className="col-span-12 space-y-6 xl:col-span-6">
-                    <CardLayout metrics={schoolMetrics} className="rounded-2xl md:gap-6 xl:grid-cols-4" labelClassName="text-theme-base dark:text-gray-400" descriptionClassName="font-bold text-title-lg dark:text-white/90"/>
-                </div>
-            </div>
+				<div className="flex-1">
+					<CardLayout
+						metrics={schoolMetrics}
+						className="rounded-2xl md:gap-3 xl:grid-cols-3 sm:grid-cols-3"
+						labelClassName="text-theme-base dark:text-gray-400"
+						descriptionClassName="font-bold text-title-lg dark:text-white/90"
+					/>
+				</div>
+			</div>
+
+			<div className="gap-4 mb-4 md:gap-6">
+				<div className="col-span-12 space-y-6 xl:col-span-6">
+					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-4">
+						{visibleInstitutions.map((item, index) => (
+							<div
+								key={item.id}
+								ref={(el) => (cardRefs.current[index] = el)}
+								onClick={() => handleCardClick(index)}
+								className={`relative border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6 rounded-2xl cursor-pointer ${
+									selectedIndex === index ? "ring-1 ring-gray-400" : ""
+								}`}
+							>
+								<div className="mb-5 overflow-hidden">
+									<img
+										src={item.image}
+										alt={item.label}
+										className="w-full object-contain bg-white dark:bg-gray-900"
+									/>
+								</div>
+
+								<div className="flex items-end justify-between">
+									<div>
+										<span className="text-theme-base font-medium dark:text-gray-400">{item.label}</span>
+									</div>
+								</div>
+
+								{selectedIndex === index && (
+									<div className="absolute inset-0 bg-white/60 dark:bg-black/30 backdrop-blur-lg rounded-2xl flex items-center justify-center z-10">
+										<div className="flex gap-4">
+											<button
+												className="p-2 bg-white rounded-full shadow hover:bg-red-500 dark:bg-white/10 dark:hover:bg-red-600"
+												onClick={(e) => {
+													e.stopPropagation();
+													handleDeleteClick(index);
+												}}
+											>
+												<TrashIcon className="w-4 h-4 text-red-600 dark:text-white" />
+											</button>
+											<button
+												className="p-2 bg-white rounded-full shadow hover:bg-gray-100 dark:bg-white/10 dark:hover:bg-white/20"
+												onClick={(e) => {
+													e.stopPropagation();
+													navigate(`/institution-details/${item.id}`, { state: item });
+												}}
+											>
+												<EyeIcon className="w-4 h-4 text-gray-700 dark:text-white" />
+											</button>
+										</div>
+									</div>
+								)}
+							</div>
+						))}
+					</div>
+				</div>
+			</div>
+
+			{visibleCount < institutionMetrics.length && (
+				<div className="flex justify-center mb-10">
+					<button
+						onClick={handleShowMore}
+						className="text-sm font-medium px-4 py-2 rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-white/[0.05] dark:hover:bg-white/[0.1] transition"
+					>
+						Show More
+					</button>
+				</div>
+			)}
+
+			{isDeleteModalOpen && (
+				<div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+					<div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-xl w-[90%] max-w-sm">
+						<h2 className="text-lg font-semibold mb-4 text-center text-gray-800 dark:text-white">Are you sure?</h2>
+						<p className="text-sm text-gray-600 dark:text-gray-300 text-center mb-6">
+							Do you really want to delete this institution?
+						</p>
+						<div className="flex justify-end gap-4">
+							<button onClick={() => setIsDeleteModalOpen(false)} className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 text-sm" >
+								Cancel
+							</button>
+							<button onClick={confirmDelete} className="px-4 py-2 rounded bg-red-600 hover:bg-red-700 text-white text-sm" >
+								Delete
+							</button>
+						</div>
+					</div>
+				</div>
+			)}
 		</>
 	);
 }

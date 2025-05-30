@@ -7,12 +7,15 @@ export default function CardLayout({ metrics, className = "", descriptionClassNa
                 <Card
                     key={index}
                     icon={metric.icon}
+                    image={metric.image}
+                    backgroundImage={metric.backgroundImage}
                     label={metric.label}
                     description={metric.description}
                     className={metric.className || className}
                     labelClassName={metric.labelClassName || labelClassName}
                     descriptionClassName={metric.descriptionClassName || descriptionClassName}
                     isSelected={metric.isSelected || false}
+                    path={metric.path}
                     {...(metric.onClick ? { onClick: metric.onClick } : {})}
                 />
             ))}
