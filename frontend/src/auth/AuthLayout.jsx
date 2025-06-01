@@ -1,5 +1,5 @@
 import Logo from '../components/logo/Logo';
-import AuthImage from '../assets/auth-bg.png';
+import AuthImage from '../assets/auth-bg.jpg';
 
 export default function AuthLayout({ children }) {
 	return (
@@ -16,7 +16,7 @@ export default function AuthLayout({ children }) {
 
 			<main className="relative min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${AuthImage})` }}>
 				<div className="w-full px-4 sm:px-6">
-					<div className="mx-auto w-full max-w-md rounded-xl p-8 shadow-lg bg-white/30 backdrop-blur-md border border-white/40">
+					<div className="mx-auto w-full max-w-4xl rounded-xl p-7 shadow-lg bg-white/30 backdrop-blur-md border border-white/40">
 						{children}
 					</div>
 				</div>
