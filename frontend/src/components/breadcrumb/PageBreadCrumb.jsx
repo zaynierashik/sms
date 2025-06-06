@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const PageBreadcrumb = ({ pathSegments = [] }) => {
 	return (
 		<div className="flex flex-wrap items-center justify-between gap-3">
-			<h2 className="text-xl font-semibold text-gray-500">
+			<h2 className="text-xl font-semibold text-gray-800">
 				{pathSegments[pathSegments.length - 1]?.name ?? ""}
 			</h2>
 

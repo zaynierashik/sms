@@ -8,6 +8,7 @@ import Class from "../pages/Class/Class"
 import ClassDetails from "../pages/Class/ClassDetails"
 import NewStudent from "../pages/Class/NewStudent"
 import Instructor from "../pages/Instructor/Instructor";
+import Institution from "../pages/Institution/Institution";
 import NewInstructor from "../pages/Instructor/NewInstructor";
 import Report from "../pages/Report/Report";
 import DashboardRoutes from './DashboardRoutes';
@@ -27,6 +28,7 @@ export default function AppRoutes() {
                     <Route path="/institution-details/:id/classes" element={<Class />} />
                     <Route path="/institution-details/:id/classes/:classId" element={<ClassDetails />} />
                     <Route path="/institution-details/:id/classes/:classId/new-student" element={<NewStudent />} />
+                    <Route path="/institutions" element={<Institution />} />
                     <Route path="/instructors" element={<Instructor />} />
                     <Route path="/new-instructor" element={<NewInstructor />} />
                     <Route path="/report" element={<Report />} />
