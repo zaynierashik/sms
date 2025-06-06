@@ -1,108 +1,69 @@
-import { useState, useEffect } from "react";
-import { Table, TableBody, TableCell, TableHeader, TableRow } from "../ui/table";
-import { EyeIcon } from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { PencilIcon } from "@heroicons/react/24/outline";
 
-export default function ItemsTable({
-    columns = [],
-    data = [],
-    onSearch,          // (query: string) => void
-    filters = null,    // JSX for filter dropdowns (optional)
-    onSelect = null,   // (selectedIds: []) => void
-    selectedIds = [],  // array of selected row IDs for external control (optional)
-    snLabel = "S.N.",
-}) {
-    const [searchQuery, setSearchQuery] = useState("");
-    const [selected, setSelected] = useState([]);
+export default function ItemsTable({ columns = [], data = [] }) {
+	const [searchQuery, setSearchQuery] = useState("");
 
-    useEffect(() => {
-        if (onSelect) {
-            onSelect(selected);
-        }
-    }, [selected]);
+	const handleSearch = (e) => {
+		setSearchQuery(e.target.value.toLowerCase());
+	};
 
-    const toggleSelectAll = () => {
-        if (selected.length === data.length) {
-            setSelected([]);
-        } else {
-            setSelected(data.map((item) => item.id));
-        }
-    };
+	const filteredData = data.filter((item) =>
+		item.instructorName.toLowerCase().includes(searchQuery)
+	);
 
-    const toggleRow = (id) => {
-        setSelected((prev) =>
-            prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
-        );
-    };
+	return (
+		<div className="bg-white rounded-2xl shadow-sm p-4">
+			{/* Search & Filters */}
+			<div className="flex justify-between items-center mb-4">
+				<div className="flex items-center gap-2">
+					<input
+						type="text"
+						placeholder="🔍 Search by Name"
+						className="border border-gray-300 rounded-md px-3 py-2 text-sm w-64"
+						onChange={handleSearch}
+						value={searchQuery}
+					/>
+					<button className="px-4 py-2 bg-gray-100 text-gray-500 rounded-md text-sm">
+						Select
+					</button>
+				</div>
+			</div>
 
-    const handleSearch = (e) => {
-        const query = e.target.value;
-        setSearchQuery(query);
-        if (onSearch) onSearch(query);
-    };
-
-    return (
-        <div className="overflow-hidden rounded-xl  bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
-            {(onSearch || filters) && (
-                <div className="flex flex-col md:flex-row justify-between items-center gap-3 pt-1 pb-5">
-                    {onSearch && (
-                        <input type="text" value={searchQuery} onChange={handleSearch} placeholder="Search..." className="border border-gray-200 px-3 py-2.5 text-gray-500 dark:text-gray-600 rounded-md text-sm w-full md:w-[80%]"/>
-                    )}
-                    {filters}
-                </div>
-            )}
-
-            <div className="max-w-full overflow-x-auto">
-                <Table>
-                    <TableHeader className="border-b border-gray-100 dark:border-white/[0.05]">
-                        <TableRow>
-                            {/* {onSelect && (
-                                <TableCell isHeader className="px-5 py-3 text-start align-middle">
-                                    <input type="checkbox" checked={selected.length === data.length} onChange={toggleSelectAll}/>
-                                </TableCell>
-                            )} */}
-
-                            <TableCell key="sn" isHeader className="px-5 py-3 font-medium text-start text-theme-base dark:text-gray-400">
-                                {snLabel}
-                            </TableCell>
-                            {columns.map((col) => (
-                                <TableCell key={col.accessor} isHeader className="px-5 py-3 font-medium text-start text-theme-base dark:text-gray-400">
-                                    {col.label}
-                                </TableCell>
-                            ))}
-                        </TableRow>
-                    </TableHeader>
-
-                    <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
-                        {data.map((row, idx) => (
-                            <TableRow key={row.id || idx}>
-                                {/* {onSelect && (
-                                    <TableCell className="px-5">
-                                        <input type="checkbox" checked={selected.includes(row.id)} onChange={() => toggleRow(row.id)}/>
-                                    </TableCell>
-                                )} */}
-                                
-                                <TableCell className="px-5 py-4 text-start font-normal text-theme-base text-gray-500 dark:text-gray-400">{idx + 1}</TableCell>
-
-                                {columns.map((col) => (
-                                    <TableCell key={col.accessor} onClick={col.accessor === "actions" ? (e) => e.stopPropagation() : undefined}
-									className="px-5 py-4 text-start font-normal text-theme-base text-gray-500 dark:text-gray-400">
-                                        {col.render ? (
-                                            col.render(row)
-                                        ) : col.accessor === "actions" ? (
-                                            <Link to="/collector-details" state={{ collector: row }} className="text-gray-50 hover:underline flex items-center">
-                                                <EyeIcon className="w-5 h-5" />
-                                            </Link>
-                                        ) : (
-                                            row[col.accessor]
-                                        )}
-                                    </TableCell>
-                                ))}
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </div>
-        </div>
-    );
+			{/* Table */}
+			<div className="overflow-x-auto">
+				<table className="w-full text-left border-collapse">
+					<thead className="bg-[#EDF9FD] rounded-t-xl">
+						<tr>
+							<th className="px-6 py-3 text-sm font-medium text-gray-600">No</th>
+							<th className="px-6 py-3 text-sm font-medium text-gray-600">Teachers Name</th>
+							<th className="px-6 py-3 text-sm font-medium text-gray-600">Email</th>
+							<th className="px-6 py-3 text-sm font-medium text-gray-600">Assigned School</th>
+							<th className="px-6 py-3 text-sm font-medium text-gray-600">Contact</th>
+							<th className="px-6 py-3 text-sm font-medium text-gray-600">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						{filteredData.map((row, idx) => (
+							<tr key={row.id} className="border-t border-gray-100">
+								<td className="px-6 py-4 text-sm font-medium text-gray-700">0{idx + 1}</td>
+								<td className="px-6 py-4 flex items-center gap-3 text-sm font-medium text-gray-700">
+									<img src={row.avatar} alt="avatar" className="w-8 h-8 rounded-full" />
+									{row.instructorName}
+								</td>
+								<td className="px-6 py-4 text-sm text-gray-600">{row.email}</td>
+								<td className="px-6 py-4 text-sm text-gray-600">{row.school}</td>
+								<td className="px-6 py-4 text-sm text-gray-600">{row.contact}</td>
+								<td className="px-6 py-4 text-sm text-gray-600">
+									<button className="p-2 hover:bg-gray-100 rounded-full">
+										<PencilIcon className="w-4 h-4 text-gray-500" />
+									</button>
+								</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	);
 }
