@@ -73,34 +73,34 @@ export default function Class() {
 						key={index}
 						ref={(el) => (cardRefs.current[index] = el)}
 						onClick={() => handleCardClick(index)}
-						className="relative border border-gray-200 bg-white h-55 p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6 rounded-2xl cursor-pointer transition duration-200 ease-in-out overflow-hidden"
+						className="relative border border-gray-200 bg-white h-55 p-5 md:p-6 rounded-2xl cursor-pointer transition duration-200 ease-in-out overflow-hidden"
 					>
 						<img src={metric.backgroundImage} alt="" className="absolute inset-0 w-full h-full object-contain opacity-50 pointer-events-none" />
 
 						<div className="absolute top-3 right-4 z-10">
-							<h4 className="text-title-lg font-bold text-right dark:text-white/90">
+							<h4 className="text-title-lg font-bold text-right">
 								{metric.description}
 							</h4>
 						</div>
 
 						<div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 z-10">
-							<span className="bg-white/80 dark:bg-white/10 text-gray-700 dark:text-gray-200 text-sm px-3 py-1 rounded-full shadow-sm">
+							<span className="bg-white/80 text-gray-700 text-sm px-3 py-1 rounded-full shadow-sm">
 								Total Students: {metric.students}
 							</span>
 						</div>
 
 						{selectedIndex === index && (
-							<div className="absolute inset-0 bg-white/60 dark:bg-black/30 backdrop-blur-md flex items-center justify-center rounded-2xl z-20">
+							<div className="absolute inset-0 bg-white/60 backdrop-blur-md flex items-center justify-center rounded-2xl z-20">
 								<div className="flex gap-4">
-									<button className="p-2 bg-white rounded-full shadow hover:bg-red-500 dark:bg-white/10 dark:hover:bg-red-600"
+									<button className="p-2 bg-white rounded-full shadow hover:bg-red-500"
 										onClick={(e) => {
 											e.stopPropagation();
 											handleDeleteClick(index);
 										}}
 									>
-										<TrashIcon className="w-4 h-4 text-red-600 dark:text-white" />
+										<TrashIcon className="w-4 h-4 text-red-600" />
 									</button>
-									<button className="p-2 bg-white rounded-full shadow hover:bg-gray-100 dark:bg-white/10 dark:hover:bg-white/20"
+									<button className="p-2 bg-white rounded-full shadow hover:bg-gray-100"
 										onClick={(e) => {
 										e.stopPropagation();
 										navigate(`/institution-details/${id}/classes/${index + 1}`, {
@@ -112,7 +112,7 @@ export default function Class() {
 										});
 										}}
 									>
-										<EyeIcon className="w-4 h-4 text-gray-700 dark:text-white" />
+										<EyeIcon className="w-4 h-4 text-gray-700" />
 									</button>
 								</div>
 							</div>
@@ -123,9 +123,9 @@ export default function Class() {
 
 			{isDeleteModalOpen && (
 				<div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-					<div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-xl w-[90%] max-w-sm">
-						<h2 className="text-lg font-semibold mb-4 text-center text-gray-800 dark:text-white"> Are you sure? </h2>
-						<p className="text-sm text-gray-600 dark:text-gray-300 text-center mb-6"> Do you really want to delete this class? </p>
+					<div className="bg-white p-6 rounded-xl shadow-xl w-[90%] max-w-sm">
+						<h2 className="text-lg font-semibold mb-4 text-center text-gray-800"> Are you sure? </h2>
+						<p className="text-sm text-gray-600 text-center mb-6"> Do you really want to delete this class? </p>
 
 						<div className="flex justify-end gap-4">
 							<button onClick={() => setIsDeleteModalOpen(false)} className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 text-sm" >

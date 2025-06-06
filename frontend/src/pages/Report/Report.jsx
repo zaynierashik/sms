@@ -58,7 +58,7 @@ export default function Instructor() {
     };
 
     const statusFilterDropdown = (
-        <select value={statusFilter} onChange={handleStatusFilterChange} className="border border-gray-200 text-gray-500 dark:bg-gray-900 dark:text-gray-400 px-3 py-[9px] rounded-md text-sm lg:w-[20%]">
+        <select value={statusFilter} onChange={handleStatusFilterChange} className="border border-gray-200 text-gray-500 px-3 py-[9px] rounded-md text-sm lg:w-[20%]">
             <option value="All">All</option>
             <option value="Active">Active</option>
             <option value="Pending">Pending</option>

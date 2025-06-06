@@ -93,7 +93,7 @@ export default function ClassDetails() {
     };
 
     const statusFilterDropdown = (
-        <select value={statusFilter} onChange={handleStatusFilterChange} className="border border-gray-200 text-gray-500 dark:bg-gray-900 dark:text-gray-400 px-3 py-[9px] rounded-md text-sm lg:w-[20%]">
+        <select value={statusFilter} onChange={handleStatusFilterChange} className="border border-gray-200 text-gray-500 px-3 py-[9px] rounded-md text-sm lg:w-[20%]">
             <option value="All">All</option>
             <option value="Active">Active</option>
             <option value="Pending">Pending</option>
@@ -155,9 +155,9 @@ export default function ClassDetails() {
             {/* Delete Confirmation Modal */}
             {isDeleteModalOpen && (
                 <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-                    <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-xl w-[90%] max-w-sm">
-                        <h2 className="text-lg font-semibold mb-4 text-center text-gray-800 dark:text-white"> Are you sure? </h2>
-                        <p className="text-sm text-gray-600 dark:text-gray-300 text-center mb-6">
+                    <div className="bg-white p-6 rounded-xl shadow-xl w-[90%] max-w-sm">
+                        <h2 className="text-lg font-semibold mb-4 text-center text-gray-800"> Are you sure? </h2>
+                        <p className="text-sm text-gray-600 text-center mb-6">
                             Do you really want to delete <strong>{pendingDeleteStudent?.studentName}</strong>?
                         </p>
 

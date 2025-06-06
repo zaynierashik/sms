@@ -69,7 +69,7 @@ export default function Home() {
 	return (
 		<>
 			<div className="mb-5 space-y-6 md:space-y-0 md:flex md:gap-3">
-				<div className="flex-1 rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6 text-theme-base dark:text-white/90">
+				<div className="flex-1 rounded-2xl border border-gray-200 bg-white p-5 md:p-6 text-theme-base/90">
 					<div className="flex items-center justify-between">
 						<div>
 							<p className="text-xl mb-2 font-medium">Hello Rashik,</p>
@@ -82,12 +82,7 @@ export default function Home() {
 				</div>
 
 				<div className="flex-1">
-					<CardLayout
-						metrics={schoolMetrics}
-						className="rounded-2xl md:gap-3 xl:grid-cols-3 sm:grid-cols-3"
-						labelClassName="text-theme-base dark:text-gray-400"
-						descriptionClassName="font-bold text-title-lg dark:text-white/90"
-					/>
+					<CardLayout metrics={schoolMetrics} className="rounded-2xl md:gap-3 xl:grid-cols-3 sm:grid-cols-3" labelClassName="text-theme-base" descriptionClassName="font-bold text-title-lg/90"/>
 				</div>
 			</div>
 
@@ -95,48 +90,40 @@ export default function Home() {
 				<div className="col-span-12 space-y-6 xl:col-span-6">
 					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-4">
 						{visibleInstitutions.map((item, index) => (
-							<div
-								key={item.id}
-								ref={(el) => (cardRefs.current[index] = el)}
-								onClick={() => handleCardClick(index)}
-								className={`relative border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6 rounded-2xl cursor-pointer ${
+							<div key={item.id} ref={(el) => (cardRefs.current[index] = el)} onClick={() => handleCardClick(index)}
+								className={`relative border border-gray-200 bg-white p-5 md:p-6 rounded-2xl cursor-pointer ${
 									selectedIndex === index ? "ring-1 ring-gray-400" : ""
 								}`}
 							>
 								<div className="mb-5 overflow-hidden">
-									<img
-										src={item.image}
-										alt={item.label}
-										className="w-full object-contain bg-white dark:bg-gray-900"
-									/>
+									<img src={item.image} alt={item.label} className="w-full object-contain bg-white" />
 								</div>
 
 								<div className="flex items-end justify-between">
 									<div>
-										<span className="text-theme-base font-medium dark:text-gray-400">{item.label}</span>
+										<span className="text-theme-base font-medium">{item.label}</span>
 									</div>
 								</div>
 
 								{selectedIndex === index && (
-									<div className="absolute inset-0 bg-white/60 dark:bg-black/30 backdrop-blur-lg rounded-2xl flex items-center justify-center z-10">
+									<div className="absolute inset-0 bg-white/60 backdrop-blur-lg rounded-2xl flex items-center justify-center z-10">
 										<div className="flex gap-4">
 											<button
-												className="p-2 bg-white rounded-full shadow hover:bg-red-500 dark:bg-white/10 dark:hover:bg-red-600"
+												className="p-2 bg-white rounded-full shadow hover:bg-red-500"
 												onClick={(e) => {
 													e.stopPropagation();
 													handleDeleteClick(index);
 												}}
 											>
-												<TrashIcon className="w-4 h-4 text-red-600 dark:text-white" />
+												<TrashIcon className="w-4 h-4 text-red-600" />
 											</button>
-											<button
-												className="p-2 bg-white rounded-full shadow hover:bg-gray-100 dark:bg-white/10 dark:hover:bg-white/20"
+											<button className="p-2 bg-white rounded-full shadow hover:bg-gray-100"
 												onClick={(e) => {
 													e.stopPropagation();
 													navigate(`/institution-details/${item.id}`, { state: item });
 												}}
 											>
-												<EyeIcon className="w-4 h-4 text-gray-700 dark:text-white" />
+												<EyeIcon className="w-4 h-4 text-gray-700" />
 											</button>
 										</div>
 									</div>
@@ -149,10 +136,7 @@ export default function Home() {
 
 			{visibleCount < institutionMetrics.length && (
 				<div className="flex justify-center mb-10">
-					<button
-						onClick={handleShowMore}
-						className="text-sm font-medium px-4 py-2 rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-white/[0.05] dark:hover:bg-white/[0.1] transition"
-					>
+					<button onClick={handleShowMore} className="text-sm font-medium px-4 py-2 rounded-md bg-gray-100 hover:bg-gray-200 transition">
 						Show More
 					</button>
 				</div>
@@ -160,9 +144,9 @@ export default function Home() {
 
 			{isDeleteModalOpen && (
 				<div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-					<div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-xl w-[90%] max-w-sm">
-						<h2 className="text-lg font-semibold mb-4 text-center text-gray-800 dark:text-white">Are you sure?</h2>
-						<p className="text-sm text-gray-600 dark:text-gray-300 text-center mb-6">
+					<div className="bg-white p-6 rounded-xl shadow-xl w-[90%] max-w-sm">
+						<h2 className="text-lg font-semibold mb-4 text-center text-gray-800">Are you sure?</h2>
+						<p className="text-sm text-gray-600 text-center mb-6">
 							Do you really want to delete this institution?
 						</p>
 						<div className="flex justify-end gap-4">

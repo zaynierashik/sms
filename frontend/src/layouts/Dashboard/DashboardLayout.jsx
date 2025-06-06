@@ -8,7 +8,7 @@ function DashboardContent() {
 	const { isExpanded, isHovered, isMobileOpen } = useSidebar();
 
 	return (
-		<div className="min-h-screen xl:flex dark:bg-gray-900">
+		<div className="min-h-screen xl:flex">
 			<div>
 				<DashboardSidebar />
 				<Backdrop />

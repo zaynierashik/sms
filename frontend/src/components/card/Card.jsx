@@ -11,7 +11,7 @@ export default function Card({
     isSelected = false
 }) {
     return (
-        <div onClick={onClick} className={`relative border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6 hover:shadow-sm transition
+        <div onClick={onClick} className={`relative border border-gray-200 bg-white p-5 md:p-6 hover:shadow-sm transition
                 ${isSelected ? "ring-2 ring-gray-400" : ""} ${className}`}
             style={{
                 backgroundImage: backgroundImage ? `url(${backgroundImage})` : undefined,
@@ -21,17 +21,17 @@ export default function Card({
             }}
         >
             {backgroundImage && (
-                <div className="absolute inset-0 bg-white/50 dark:bg-black/50 rounded-2xl pointer-events-none"></div>
+                <div className="absolute inset-0 bg-white/50 rounded-2xl pointer-events-none"></div>
             )}
 
             <div className="relative z-10">
                 {image ? (
                     <div className="mb-5 overflow-hidden">
-                        <img src={image} alt="Logo" className="w-full object-contain bg-white dark:bg-gray-900" />
+                        <img src={image} alt="Logo" className="w-full object-contain bg-white" />
                     </div>
                 ) : Icon ? (
-                    <div className="flex items-center justify-center mb-5 w-12 h-12 bg-gray-100 rounded-xl dark:bg-gray-800">
-                        <Icon className="w-6 h-6 text-gray-800 dark:text-white/90" />
+                    <div className="flex items-center justify-center mb-5 w-12 h-12 bg-gray-100 rounded-xl">
+                        <Icon className="w-6 h-6 text-gray-800" />
                     </div>
                 ) : null}
 

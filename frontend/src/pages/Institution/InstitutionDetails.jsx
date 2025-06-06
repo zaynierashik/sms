@@ -29,7 +29,7 @@ export default function InstitutionDetails() {
             />
 
             <div className="flex-1">
-                <CardLayout metrics={schoolMetrics} className="rounded-2xl md:gap-3 xl:grid-cols-3 sm:grid-cols-3" labelClassName="text-theme-base dark:text-gray-400" descriptionClassName="font-bold text-title-lg dark:text-white/90" />
+                <CardLayout metrics={schoolMetrics} className="rounded-2xl md:gap-3 xl:grid-cols-3 sm:grid-cols-3" labelClassName="text-theme-base" descriptionClassName="font-bold text-title-lg" />
             </div>
 		</div>
 	);
