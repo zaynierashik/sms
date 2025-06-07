@@ -4,12 +4,13 @@ const ComponentCard = ({
 	onIconClick,
 	children,
 	className = "",
+	titleClassName = "",
 	desc = "",
 }) => {
 	return (
 		<div className={`rounded-2xl border border-gray-200 bg-white ${className}`}>
 			<div className="flex items-center justify-between px-6 py-5">
-				<h3 className="text-2xl uppercase tracking-widest font-medium text-gray-800"> {title} </h3>
+				<h3 className={`text-2xl uppercase tracking-widest font-medium text-gray-800 ${titleClassName}`}> {title} </h3>
 
 				{Icon && (
 					<div className="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-xl">
