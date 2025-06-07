@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { EyeIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
-import CardLayout from "../../components/card/CardLayout";
-import UserCard from "../../assets/card.png";
+// import CardLayout from "../../components/card/CardLayout";
+import UserCard from "../../assets/DashBoardImg.png";
 import TritonLogo from "../../assets/institutions/triton-logo.png";
 
 export default function Home() {
@@ -14,11 +14,11 @@ export default function Home() {
 
 	const cardRefs = useRef([]);
 
-	const schoolMetrics = [
-		{ label: "Total Institutions", description: "25" },
-		{ label: "Total Instructors", description: "15" },
-		{ label: "Offered Courses", description: "5" },
-	];
+	// const schoolMetrics = [
+	// 	{ label: "Total Institutions", description: "25" },
+	// 	{ label: "Total Instructors", description: "15" },
+	// 	{ label: "Offered Courses", description: "5" },
+	// ];
 
 	const [institutionMetrics, setInstitutionMetrics] = useState(
 		Array(16)
@@ -68,22 +68,22 @@ export default function Home() {
 
 	return (
 		<>
-			<div className="mb-5 space-y-6 md:space-y-0 md:flex md:gap-3">
-				<div className="flex-1 rounded-2xl border border-gray-200 bg-white p-5 md:p-6 text-theme-base/90">
-					<div className="flex items-center justify-between">
-						<div>
-							<p className="text-xl mb-2 font-medium">Hello Rashik,</p>
-							<p className="dark:text-gray-400">
-								Welcome! Let's dive into your classes and keep progressing towards the goals.
-							</p>
-						</div>
-						<img src={UserCard} alt="Logo" className="object-contain w-20 h-20 ml-4" />
-					</div>
-				</div>
+		<div className="mb-5 p-6">
+	<div className="bg-white p-5 md:p-6 text-theme-base/90 border border-gray-200 rounded-2xl w-[500px]">
+		<div className="flex items-center justify-between h-[100px]">
+			<div>
+				<p className="text-xl mb-2 font-medium text-black">Hey Admin.</p>
+				<p className="text-gray-500 text-sm">
+					Welcome! Dive into your classes and keep progressing towards your goals
+				</p>
+			</div>
+			<img src={UserCard} alt="Logo" className="object-contain w-30 h-30" />
+		</div>
+	</div>
 
-				<div className="flex-1">
+				{/* <div className="flex-1">
 					<CardLayout metrics={schoolMetrics} className="rounded-2xl md:gap-3 xl:grid-cols-3 sm:grid-cols-3" labelClassName="text-theme-base" descriptionClassName="font-bold text-title-lg/90"/>
-				</div>
+				</div> */}
 			</div>
 
 			<div className="gap-4 mb-4 md:gap-6">
